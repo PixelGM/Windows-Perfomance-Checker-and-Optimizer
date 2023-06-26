@@ -17,8 +17,17 @@
 Debug
 Release
 .vs
+x64
+x86
+Windows Performance Checker/x64/Debug/
+Windows Performance Checker/x64/Release/
+Windows Performance Checker/x86/Debug/
+Windows Performance Checker/x86/Release/
 *.suo
 *.csproj.user
 *.vbproj.user
 ipch
 *sdf
+*.tlog
+*.pdb
+*.log
