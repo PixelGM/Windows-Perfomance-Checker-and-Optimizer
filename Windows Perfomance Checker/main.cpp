@@ -21,39 +21,51 @@ int main() {
 
                 // Open the output file
                 std::ifstream file("powercfg.txt");
-                std::string line;
+                // Check if Ultimate Performance plan exists and is active
                 bool ultimatePerformanceExists = false;
                 bool ultimatePerformanceIsActive = false;
                 std::string ultimatePerformanceGUID;
-
-                // Check each line for Ultimate Performance
+                std::string line;
                 while (std::getline(file, line)) {
                     if (line.find("Ultimate Performance") != std::string::npos) {
                         ultimatePerformanceExists = true;
-                        // Extract the GUID
-                        std::regex guidRegex(R"(Power Scheme GUID: ([\da-fA-F-]+))");
-                        std::smatch matches;
-                        if (std::regex_search(line, matches, guidRegex)) {
-                            ultimatePerformanceGUID = matches[1];
-                        }
-                        // Check if Ultimate Performance is currently active
-                        if (line.find('*') != std::string::npos) {
+                        // Extract GUID from line
+                        size_t start = line.find(":") + 2; // Start after "GUID: "
+                        size_t end = line.find("  ("); // Stop before "  (Ultimate Performance)"
+                        ultimatePerformanceGUID = line.substr(start, end - start);
+                        if (line.find("*") != std::string::npos) {
                             ultimatePerformanceIsActive = true;
                         }
                         break;
                     }
                 }
 
-                // If Ultimate Performance does not exist, create it
+                // Create Ultimate Performance plan if it doesn't exist
                 if (!ultimatePerformanceExists) {
                     std::system("powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61");
-                    ultimatePerformanceGUID = "e9a42b02-d5df-448d-aa00-03f14749eb61";  // GUID of the new power plan
+                    std::cout << "Ultimate Performance plan created." << std::endl;
+
+                    // Recreate the text file
+                    std::system("powercfg /list > powercfg.txt");
+                    file.close();
+                    file.open("powercfg.txt");
+
+                    // Read the new powercfg list
+                    while (std::getline(file, line)) {
+                        if (line.find("Ultimate Performance") != std::string::npos) {
+                            // Extract GUID from line
+                            size_t start = line.find(":") + 2; // Start after "GUID: "
+                            size_t end = line.find("  ("); // Stop before "  (Ultimate Performance)"
+                            ultimatePerformanceGUID = line.substr(start, end - start);
+                            break;
+                        }
+                    }
                 }
 
-                // If Ultimate Performance is not active, set it as the active power plan
+                // Set Ultimate Performance plan as active if it isn't already
                 if (!ultimatePerformanceIsActive) {
                     std::string command = std::string("powercfg -setactive ") + ultimatePerformanceGUID;
-                    if (std::system(command.c_str()) == 0) { // The system function returns 0 if the command is executed successfully
+                    if (std::system(command.c_str()) == 0) {
                         std::cout << "Successfully set power plan to Ultimate Performance." << std::endl;
                     }
                     else {
