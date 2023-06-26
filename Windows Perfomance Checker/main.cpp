@@ -118,7 +118,7 @@ void disableGameMode() {
 
 int main() {
     // Print menu option
-    cout << "Beginning Performance Check" << endl << endl;
+    cout << "Beginning Performance Check..." << endl << endl;
 
     // Check the power option
     string ultimatePerformanceGUID = checkPowerPlan();
@@ -129,19 +129,28 @@ int main() {
         cout << "Performance Check Complete" << endl;
     }
     else {
-        cout << "Creating and setting Ultimate Performance plan" << endl;
+        cout << "Creating and setting Ultimate Performance plan..." << endl;
         // Create and set the power plan
         createAndSetPowerPlan();
         cout << endl;
         cout << "Performance Check Complete" << endl;
     }
 
+    cout << endl;
+    cout << "------------------------" << endl;
+
+    // Enable Game Mode;
+    cout << "Enabling Game Mode..." << endl;
+    enableGameMode();
+
+    cout << endl;
+    cout << "------------------------" << endl;
+
     cout << "Congrats Your PC has been Optimized! UwU" << endl;
 
     cout << endl;
 
-    // Enable Game Mode;
-    enableGameMode();
+    
 
     return 0;
 }
