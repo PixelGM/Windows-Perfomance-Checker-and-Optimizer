@@ -93,6 +93,29 @@ void createAndSetPowerPlan() {
     remove("powercfg.txt");
 }
 
+void enableGameMode() {
+    // Enable Game Mode
+    string command = "powershell -Command \"If (Test-Path HKCU:\\Software\\Microsoft\\GameBar) {Get-Item HKCU:\\Software\\Microsoft\\GameBar|Set-ItemProperty -Name AllowAutoGameMode -Value 1 -Verbose -Force}\"";
+    if (system(command.c_str()) == 0) {
+        cout << "Successfully enabled Game Mode." << endl;
+    }
+    else {
+        cout << "Failed to enable Game Mode." << endl;
+    }
+}
+
+void disableGameMode() {
+    // Disable Game Mode
+    string command = "powershell -Command \"If (Test-Path HKCU:\\Software\\Microsoft\\GameBar) {Get-Item HKCU:\\Software\\Microsoft\\GameBar|Set-ItemProperty -Name AllowAutoGameMode -Value 0 -Verbose -Force}\"";
+    if (system(command.c_str()) == 0) {
+        cout << "Successfully disabled Game Mode." << endl;
+    }
+    else {
+        cout << "Failed to disable Game Mode." << endl;
+    }
+}
+
+
 int main() {
     // Print menu option
     cout << "Beginning Performance Check" << endl << endl;
@@ -114,6 +137,11 @@ int main() {
     }
 
     cout << "Congrats Your PC has been Optimized! UwU" << endl;
+
+    cout << endl;
+
+    // Enable Game Mode;
+    enableGameMode();
 
     return 0;
 }
