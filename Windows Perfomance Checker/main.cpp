@@ -56,7 +56,7 @@ void setPowerPlan(const std::string& ultimatePerformanceGUID) {
 void createAndSetPowerPlan() {
     // Create Ultimate Performance plan
     std::system("powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61");
-    std::cout << " Ultimate Performance plan created." << std::endl;
+    std::cout << "Ultimate Performance plan created." << std::endl;
 
     // Recreate the text file
     std::system("powercfg /list > powercfg.txt");
@@ -90,7 +90,6 @@ void createAndSetPowerPlan() {
     std::remove("powercfg.txt");
 }
 
-
 int main() {
     // Print menu option
     std::cout << "Press 1 to Begin Performance Check" << std::endl << std::endl;
@@ -104,7 +103,6 @@ int main() {
             if (key == '1') {
                 std::string ultimatePerformanceGUID = checkPowerPlan();
                 if (!ultimatePerformanceGUID.empty()) {
-                    std::cout << "Press 2 to optimize it" << std::endl;
                     char key = '\0';
                     while (key != '2' && key != '1') {
                         if (_kbhit()) {
@@ -122,7 +120,7 @@ int main() {
                     }
                 }
                 else {
-                    //std::cout << "Press 2 to create and set Ultimate Performance plan" << std::endl;
+                    std::cout << "Press 2 to create and set Ultimate Performance plan" << std::endl;
                     char key = '\0';
                     while (key != '2' && key != '1') {
                         if (_kbhit()) {
@@ -140,10 +138,11 @@ int main() {
                     }
                 }
             }
-
-
         }
     }
 
+    std::cout << "Congrats Your PC has been Optimized! UwU" << std::endl;
+
     return 0;
 }
+
