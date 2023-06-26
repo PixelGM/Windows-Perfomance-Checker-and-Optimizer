@@ -92,53 +92,22 @@ void createAndSetPowerPlan() {
 
 int main() {
     // Print menu option
-    std::cout << "Press 1 to Begin Performance Check" << std::endl << std::endl;
+    std::cout << "Beginning Performance Check" << std::endl << std::endl;
 
-    // Wait for user to press a key
-    while (true) {
-        if (_kbhit()) {
-            char key = _getch();
-
-            // If user presses '1', check the power option
-            if (key == '1') {
-                std::string ultimatePerformanceGUID = checkPowerPlan();
-                if (!ultimatePerformanceGUID.empty()) {
-                    char key = '\0';
-                    while (key != '2' && key != '1') {
-                        if (_kbhit()) {
-                            key = _getch();
-                            // If user presses '2', set the power plan
-                            if (key == '2') {
-                                setPowerPlan(ultimatePerformanceGUID);
-                                std::cout << std::endl;
-                                std::cout << "Press 1 to Begin Performance Check again" << std::endl;
-                            }
-                        }
-                    }
-                    if (key == '1') {
-                        break;
-                    }
-                }
-                else {
-                    std::cout << "Press 2 to create and set Ultimate Performance plan" << std::endl;
-                    char key = '\0';
-                    while (key != '2' && key != '1') {
-                        if (_kbhit()) {
-                            key = _getch();
-                            // If user presses '2', create and set the power plan
-                            if (key == '2') {
-                                createAndSetPowerPlan();
-                                std::cout << std::endl;
-                                std::cout << "Press 1 to Begin Performance Check again" << std::endl;
-                            }
-                        }
-                    }
-                    if (key == '1') {
-                        break;
-                    }
-                }
-            }
-        }
+    // Check the power option
+    std::string ultimatePerformanceGUID = checkPowerPlan();
+    if (!ultimatePerformanceGUID.empty()) {
+        // Set the power plan
+        setPowerPlan(ultimatePerformanceGUID);
+        std::cout << std::endl;
+        std::cout << "Performance Check Complete" << std::endl;
+    }
+    else {
+        std::cout << "Creating and setting Ultimate Performance plan" << std::endl;
+        // Create and set the power plan
+        createAndSetPowerPlan();
+        std::cout << std::endl;
+        std::cout << "Performance Check Complete" << std::endl;
     }
 
     std::cout << "Congrats Your PC has been Optimized! UwU" << std::endl;
